@@ -14,6 +14,7 @@ PImage Alien;
 PImage win;
 PImage lose;
 PImage space2;
+PImage lost;
 
 int x=0;
 int x1;
@@ -48,6 +49,9 @@ PImage planet2;
 PImage planet3;
 PImage planet4;
 
+lose l;
+ArrayList<lose> loses = new ArrayList<lose>();
+
 void setup()
 {
   ball1 = new Ball();
@@ -68,11 +72,8 @@ void setup()
   
   ex = 140;
   ey = 0;
-
-if(z1<-100)
-{
-  image(lose,0,0,1200,800);
-}
+ 
+ l = new lose();
  
 }
 
@@ -271,7 +272,7 @@ void scene2()
   if(x1==1200)
  {
    z1=z1-1;
-   if(z1<-1000)
+   if(z1<-1600)
    {
      image(lose,1200-x1,0,1200,800);
    }
@@ -303,21 +304,41 @@ if(x==1200)
     String b="Man: Boss I cannot capture the Alien...";
     String b1="Sorry commander we have lied to you.";
     String b2="Man: What, but for what purpose?";
-    String b3="we needed a sacrifice in order to keep peace with";
+    String b3="We needed a sacrifice in order to keep peace with";
     String b4="the aliens, and you were selected. I am sorry commander";
     String b5="Man: I understand Boss, I will become the sacrifice for";
-    String b6="earth and thank you for what you have done to me.";
+    String b6="earth and save everyone.";
     text(b,  0, 900+z1);
     text(b1,  0, 1100+z1);
     text(b2,  0, 1300+z1);
-    text(b3,  0, 1400+z1);
-    text(b4,  0, 1500+z1);
-    text(b5,  0, 1700+z1);
+    text(b3,  0, 1500+z1);
+    text(b4,  0, 1600+z1);
+    text(b5,  0, 1800+z1);
     text(b6,  0, 1900+z1);
     
-    if(z1<-1000)
+    if(z1<-1600)
     {
       image(lose,0,0,1200,800);
+      
+  l.update();
+  
+    loses.add(new lose(250, -20));
+    loses.add(new lose(500, -20));
+    loses.add(new lose(750, -20));
+    loses.add(new lose(1000, -20));
+    loses.add(new lose(1250, -20));
+    
+  
+  for(int i = loses.size()-1; i >= 0; i--)
+  {
+    //particles[i] does not work with array list
+    loses.get(i).update();
+    
+    if(loses.get(i).position.y > height)
+    {
+      loses.remove(i);
+    }
+  }
     }
 
 }
@@ -338,6 +359,7 @@ void loadimages()
   planet2=loadImage("planet2.png");
   planet3=loadImage("planet3.png");
   planet4=loadImage("planet4.png");
+  lost=loadImage("lost.png");
 }
 
 
